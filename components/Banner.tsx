@@ -1,5 +1,5 @@
-const Banner = () => {
+const BannerSection = () => {
   return <div>Banner</div>;
 };
 
-export default Banner;
+export default BannerSection;
