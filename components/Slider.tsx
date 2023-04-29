@@ -13,12 +13,12 @@ function SampleNextArrow(props: any) {
       className="w-44 h-8 absolute bottom-32 z-30 right-10 border-[1px] border-gray-900 px-2 hover:border-gray-800 bg-black/50 hover:bg-black shadow-btnShadow overflow-hidden"
       onClick={onClick}
     >
-      <div className="w-full h-full text-gray-300 text-sm uppercase relative flex items-center justify-end cursor-pointer group">
+      <div className="w-full h-full text-gray-300 text-sm uppercase relative flex items-center justify-end cursor-pointer group  ">
         <span className="absolute -translate-x-28 translate-y-0 group-hover:-translate-y-7 transition-transform duration-500">
           next
         </span>
         <span className="absolute -translate-x-28 translate-y-7 group-hover:translate-y-0 transition-transform duration-500">
-          image
+          next
         </span>
         <span className="text-lg">
           <FaChevronRight />
@@ -35,7 +35,7 @@ function SamplePrevArrow(props: any) {
       className="w-44 h-8 absolute bottom-32 z-30 left-10 border-[1px] border-gray-900 px-2 hover:border-gray-800 bg-black/50 hover:bg-black shadow-btnShadow overflow-hidden"
       onClick={onClick}
     >
-      <div className="w-full h-full text-gray-300 text-sm uppercase relative flex items-center justify-between cursor-pointer group">
+      <div className="w-full h-full text-gray-300 text-sm uppercase relative flex items-center justify-between cursor-pointer group  ">
         <span className="text-lg">
           <FaChevronLeft />
         </span>
@@ -43,7 +43,7 @@ function SamplePrevArrow(props: any) {
           previous
         </span>
         <span className="absolute translate-x-24 translate-y-7 group-hover:translate-y-0 transition-transform duration-500">
-          image
+          previous
         </span>
       </div>
     </div>
@@ -99,5 +99,6 @@ const SliderSection = () => {
     </div>
   );
 };
+
 
 export default SliderSection;

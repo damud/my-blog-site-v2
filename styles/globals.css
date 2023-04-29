@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer components {
-  .header-link {
-    @apply text-gray-500 hover:text-purple-500 cursor-pointer duration-300;
+  .headerLi {
+    @apply text-primaryColor hover:text-secondaryColor cursor-pointer duration-300;
   }
 }
