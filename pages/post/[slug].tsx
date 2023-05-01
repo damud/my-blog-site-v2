@@ -4,6 +4,7 @@ import Image from "next/image";
 import { sanityClient, urlFor } from "@/sanity";
 import { GetStaticProps } from "next";
 import { Post } from "@/typings";
+import PortableText from "react-portable-text";
 
 interface Props {
   post: Post;
@@ -37,9 +38,49 @@ const Post = ({ post }: Props) => {
               alt="Author post image"
             />
             <p className="font-bodyFont text-base">
-              Blog post by <span className="font-bold text-secondaryColor">{post.author.name}</span> - Published At{" "}
-              {new Date(post.publishedAt).toLocaleDateString()}
+              Blog post by{" "}
+              <span className="font-bold text-secondaryColor">
+                {post.author.name}
+              </span>{" "}
+              - Published At {new Date(post.publishedAt).toLocaleDateString()}
             </p>
+          </div>
+          <div className="mt-10">
+            <PortableText
+              dataset={process.env.NEXT_PUBLIC_SANITY_DATASET || "production"}
+              projectId={
+                process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "klpx2x7i"
+              }
+              content={post.body}
+              serializers={{
+                h1: (props: any) => (
+                  <h1
+                    className="text-3xl font-bold my-5 font-titleFont"
+                    {...props}
+                  />
+                ),
+                h2: (props: any) => (
+                  <h2
+                    className="text-2xl font-bold my-5 font-titleFont"
+                    {...props}
+                  />
+                ),
+                h3: (props: any) => (
+                  <h3
+                    className="text-2xl font-bold my-5 font-titleFont"
+                    {...props}
+                  />
+                ),
+                li: ({ children }: any) => (
+                  <li className="ml-4 list-disc">{children}</li>
+                ),
+                link: ({ href, children }: any) => (
+                  <a href={href} className="text-cyan-500 hover:underline">
+                    {children}
+                  </a>
+                ),
+              }}
+            />
           </div>
         </article>
       </div>
