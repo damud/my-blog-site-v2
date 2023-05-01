@@ -5,12 +5,30 @@ import { sanityClient, urlFor } from "@/sanity";
 import { GetStaticProps } from "next";
 import { Post } from "@/typings";
 import PortableText from "react-portable-text";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { type } from "os";
 
 interface Props {
   post: Post;
 }
 
+type Inputs = {
+  _id: string;
+  name: string;
+  email: string;
+  comment: string;
+};
+
 const Post = ({ post }: Props) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = data => {
+    console.log(data);
+  };
   return (
     <div>
       <Header />
@@ -92,13 +110,23 @@ const Post = ({ post }: Props) => {
             Leave a Comment below!
           </h3>
           <hr className="py-3 mt-2" />
+          <input
+            {...register("_id")}
+            type="hidden"
+            name="_id"
+            value={post._id}
+          />
 
-          <form className="mt-7 flex flex-col gap-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="mt-7 flex flex-col gap-6"
+          >
             <label className="flex flex-col">
               <span className="font-titleFont font-semibold text-base">
                 Name
               </span>
               <input
+                {...(register("name"), { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 type="text"
                 placeholder="Enter your name"
@@ -109,6 +137,7 @@ const Post = ({ post }: Props) => {
                 Email
               </span>
               <input
+                {...(register("email"), { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 type="email"
                 placeholder="Enter your Email"
@@ -119,12 +148,18 @@ const Post = ({ post }: Props) => {
                 Comment:
               </span>
               <textarea
+                {...(register("comment"), { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 placeholder="Enter your Comments"
                 rows={6}
               />
             </label>
-            <button className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300" type="submit">Submit</button>
+            <button
+              className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300"
+              type="submit"
+            >
+              Submit
+            </button>
           </form>
         </div>
       </div>
