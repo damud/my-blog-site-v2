@@ -7,6 +7,8 @@ import { Post } from "@/typings";
 import PortableText from "react-portable-text";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { type } from "os";
+import { useState } from "react";
+import { error } from "console";
 
 interface Props {
   post: Post;
@@ -20,6 +22,7 @@ type Inputs = {
 };
 
 const Post = ({ post }: Props) => {
+  const [submitted, setSubmitted] = useState(false);
   const {
     register,
     handleSubmit,
@@ -27,7 +30,16 @@ const Post = ({ post }: Props) => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = data => {
-    console.log(data);
+    fetch("/api/createComent", {
+      method: "POST",
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        setSubmitted(true);
+      })
+      .catch(error => {
+        setSubmitted(false);
+      });
   };
   return (
     <div>
