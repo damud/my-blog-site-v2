@@ -126,7 +126,7 @@ const Post = ({ post }: Props) => {
                 Name
               </span>
               <input
-                {...(register("name"), { required: true })}
+                {...register("name", { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 type="text"
                 placeholder="Enter your name"
@@ -137,7 +137,7 @@ const Post = ({ post }: Props) => {
                 Email
               </span>
               <input
-                {...(register("email"), { required: true })}
+                {...register("email", { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 type="email"
                 placeholder="Enter your Email"
@@ -148,7 +148,7 @@ const Post = ({ post }: Props) => {
                 Comment:
               </span>
               <textarea
-                {...(register("comment"), { required: true })}
+                {...register("comment", { required: true })}
                 className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
                 placeholder="Enter your Comments"
                 rows={6}
