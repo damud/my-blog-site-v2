@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { type } from "os";
 import { useState } from "react";
 import { error } from "console";
+import { comment } from "postcss";
 
 interface Props {
   post: Post;
@@ -175,9 +176,21 @@ const Post = ({ post }: Props) => {
               Submit
             </button>
           </form>
+          <div className="w-full flex flex-col p-10 m-10 mx-auto shadow-bgColor shadow-lg space-y-2">
+            <h3 className="texy-3xl font-titleFont font-semibold">Comments</h3>
+            <hr />
+            {post.comments.map(comment => (
+              <div key={comment._id}>
+                <p>
+                  <span className="text-secondaryColor">{comment.name}</span>{" "}
+                  {comment.comment}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };
@@ -212,6 +225,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             name,
             image,
         },
+        "comments": *[_type == "comment" && post._ref == ^._id && approved == true],
         description,
         mainImage,
         slug,
