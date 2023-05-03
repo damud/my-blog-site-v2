@@ -62,9 +62,11 @@ const Post = ({ post }: Props) => {
             {post.description}
           </h2>
           <div className="flex items-center gap-2">
-            <img
+            <Image
               className="rounded-full w-12 h-12 object-cover bg-red-400"
               src={urlFor(post.author.image).url()}
+              width={500}
+              height={500}
               alt="Author post image"
             />
             <p className="font-bodyFont text-base">
@@ -116,7 +118,7 @@ const Post = ({ post }: Props) => {
         <hr className="max-w-lg my-5 mx-auto border[1px] border-secondaryColor" />
         <div>
           <p className="text-xs text-secondaryColor uppercase font-titleFont font-bold">
-            Enjiyed this aritcle?
+            Enjoyed this aritcle?
           </p>
           <h3 className="font-titleFont text-3xl font-bold">
             Leave a Comment below!
