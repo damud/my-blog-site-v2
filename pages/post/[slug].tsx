@@ -30,7 +30,7 @@ const Post = ({ post }: Props) => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = data => {
-    fetch("/api/createComent", {
+    fetch("/api/createComment", {
       method: "POST",
       body: JSON.stringify(data),
     })

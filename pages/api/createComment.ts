@@ -9,10 +9,27 @@ const client = createClient({
   token: process.env.SANITY_API_TOKEN,
 });
 
-export default function createComment(
+export default async function createComment(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const { _id, name, email, comment } = JSON.parse(req.body);
-  res.status(200).json({ name: "John Doe" });
+  try {
+    await client.create({
+      _type: "comment",
+      post: {
+        _type: "reference",
+        _ref: _id,
+      },
+      name,
+      email,
+      comment,
+    });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ message: "Submit comment error has occured", err });
+  }
+  console.log("Comment has been submitted successfully");
+  res.status(200).json({ message: "Comment has been submitted successfully" });
 }
