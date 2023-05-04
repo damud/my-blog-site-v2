@@ -10,6 +10,7 @@ import { type } from "os";
 import { useState } from "react";
 import { error } from "console";
 import { comment } from "postcss";
+import { useSession } from "next-auth/react";
 
 interface Props {
   post: Post;
@@ -23,6 +24,8 @@ type Inputs = {
 };
 
 const Post = ({ post }: Props) => {
+  const { data: session } = useSession();
+  const [userErr, setUserErr] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const {
     register,
@@ -41,6 +44,13 @@ const Post = ({ post }: Props) => {
       .catch(error => {
         setSubmitted(false);
       });
+  };
+  const handleUserErr = () => {
+    if (!session) {
+      setUserErr("Please sign in to Comment");
+    } else {
+      setUserErr("");
+    }
   };
   return (
     <div>
@@ -169,13 +179,29 @@ const Post = ({ post }: Props) => {
                 rows={6}
               />
             </label>
+            {session && (
+              <button
+                className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300"
+                type="submit"
+              >
+                Submit
+              </button>
+            )}
+          </form>
+          {!session && (
             <button
-              className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300"
-              type="submit"
+              onClick={handleUserErr}
+              className="w-full bg-secondaryColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-bgColor duration-300"
             >
               Submit
             </button>
-          </form>
+          )}
+          {userErr && (
+            <p className="text-sm font-titleFont text-center font-semibold text-red-500 underline underline-offset-2 my-1 px-4 animate-bounce">
+              {userErr}{" "}
+              <span className="text-base font-bold italic mr-2">!!!</span>
+            </p>
+          )}
           <div className="w-full flex flex-col p-10 m-10 mx-auto shadow-bgColor shadow-lg space-y-2">
             <h3 className="texy-3xl font-titleFont font-semibold">Comments</h3>
             <hr />
