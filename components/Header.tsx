@@ -34,12 +34,21 @@ const HeaderSection = () => {
             <p className="text-sm font-medium">Hello Stranger!</p>
           </div>
 
-          <button
-            onClick={() => signIn()}
-            className="uppercase text-xs md:text-sm border-[1px] border-gray-500 hover:border-amber-500 px-2 sm:px-4 py-1 font-semibold hover:text-white rounded-md hover:bg-purple-500 transition-all duration-300 active:bg-yellow-600"
-          >
-            Sign In
-          </button>
+          {session ? (
+            <button
+              onClick={() => signOut()}
+              className="uppercase text-xs md:text-sm border-[1px] border-gray-500 hover:border-amber-500 px-2 sm:px-4 py-1 font-semibold hover:text-white rounded-md hover:bg-purple-500 transition-all duration-300 active:bg-yellow-600"
+            >
+              Sign Out
+            </button>
+          ) : (
+            <button
+              onClick={() => signIn()}
+              className="uppercase text-xs md:text-sm border-[1px] border-gray-500 hover:border-amber-500 px-2 sm:px-4 py-1 font-semibold hover:text-white rounded-md hover:bg-purple-500 transition-all duration-300 active:bg-yellow-600"
+            >
+              Sign In
+            </button>
+          )}
         </div>
       </div>
     </div>
