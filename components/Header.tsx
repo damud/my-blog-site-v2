@@ -28,10 +28,13 @@ const HeaderSection = () => {
           <div className="flex items-center gap-1">
             <Image
               className="w-8 h-8 rounded-full"
-              src={picOfMe}
+              src={session ? session?.user!.image! : picOfMe}
               alt="Picture of me"
+              width={50} height={50}
             />
-            <p className="text-sm font-medium">Hello Stranger!</p>
+            <p className="text-sm font-medium">
+              {session ? session?.user!.name : "Hello Stranger"}
+            </p>
           </div>
 
           {session ? (
