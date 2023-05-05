@@ -6,10 +6,7 @@ import { GetStaticProps } from "next";
 import { Post } from "@/typings";
 import PortableText from "react-portable-text";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { type } from "os";
 import { useState } from "react";
-import { error } from "console";
-import { comment } from "postcss";
 import { useSession } from "next-auth/react";
 
 interface Props {
@@ -127,96 +124,106 @@ const Post = ({ post }: Props) => {
           </div>
         </article>
         <hr className="max-w-lg my-5 mx-auto border[1px] border-secondaryColor" />
-        <div>
-          <p className="text-xs text-secondaryColor uppercase font-titleFont font-bold">
-            Enjoyed this aritcle?
-          </p>
-          <h3 className="font-titleFont text-3xl font-bold">
-            Leave a Comment below!
-          </h3>
-          <hr className="py-3 mt-2" />
-          <input
-            {...register("_id")}
-            type="hidden"
-            name="_id"
-            value={post._id}
-          />
-
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="mt-7 flex flex-col gap-6"
-          >
-            <label className="flex flex-col">
-              <span className="font-titleFont font-semibold text-base">
-                Name
-              </span>
-              <input
-                {...register("name", { required: true })}
-                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
-                type="text"
-                placeholder="Enter your name"
-              />
-            </label>
-            <label className="flex flex-col">
-              <span className="font-titleFont font-semibold text-base">
-                Email
-              </span>
-              <input
-                {...register("email", { required: true })}
-                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
-                type="email"
-                placeholder="Enter your Email"
-              />
-            </label>
-            <label className="flex flex-col">
-              <span className="font-titleFont font-semibold text-base">
-                Comment:
-              </span>
-              <textarea
-                {...register("comment", { required: true })}
-                className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
-                placeholder="Enter your Comments"
-                rows={6}
-              />
-            </label>
-            {session && (
+        {submitted ? (
+          <div className="flex flex-col items-center gap-2 p-10 my-10 bg-bgColor text-white mx-auto">
+            <h1 className="text-2xl font-bold">
+              Thank you for submitting your comment!
+            </h1>
+            <p>Once it has been approved, it will appear below! </p>
+          </div>
+        ) : (
+          <div>
+            <p className="text-xs text-secondaryColor uppercase font-titleFont font-bold">
+              Enjoyed this aritcle?
+            </p>
+            <h3 className="font-titleFont text-3xl font-bold">
+              Leave a Comment below!
+            </h3>
+            <hr className="py-3 mt-2" />
+            <input
+              {...register("_id")}
+              type="hidden"
+              name="_id"
+              value={post._id}
+            />
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="mt-7 flex flex-col gap-6"
+            >
+              <label className="flex flex-col">
+                <span className="font-titleFont font-semibold text-base">
+                  Name
+                </span>
+                <input
+                  {...register("name", { required: true })}
+                  className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                  type="text"
+                  placeholder="Enter your name"
+                />
+              </label>
+              <label className="flex flex-col">
+                <span className="font-titleFont font-semibold text-base">
+                  Email
+                </span>
+                <input
+                  {...register("email", { required: true })}
+                  className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                  type="email"
+                  placeholder="Enter your Email"
+                />
+              </label>
+              <label className="flex flex-col">
+                <span className="font-titleFont font-semibold text-base">
+                  Comment:
+                </span>
+                <textarea
+                  {...register("comment", { required: true })}
+                  className="text-base placeholder:text-sm border-b-[1px] border-secondaryColor py-1 px-4 outline-none focus-within:shadow-xl shadow-secondaryColor"
+                  placeholder="Enter your Comments"
+                  rows={6}
+                />
+              </label>
+              {session && (
+                <button
+                  className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              )}
+            </form>
+            {!session && (
               <button
-                className="w-full bg-bgColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-secondaryColor duration-300"
-                type="submit"
+                onClick={handleUserErr}
+                className="w-full bg-secondaryColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-bgColor duration-300"
               >
                 Submit
               </button>
             )}
-          </form>
-          {!session && (
-            <button
-              onClick={handleUserErr}
-              className="w-full bg-secondaryColor text-white text-base font-titleFont font-semibold tracking-wider uppercase py-2 rounded-sm hover:bg-bgColor duration-300"
-            >
-              Submit
-            </button>
-          )}
-          {userErr && (
-            <p className="text-sm font-titleFont text-center font-semibold text-red-500 underline underline-offset-2 my-1 px-4 animate-bounce">
-              {userErr}{" "}
-              <span className="text-base font-bold italic mr-2">!!!</span>
-            </p>
-          )}
-          <div className="w-full flex flex-col p-10 m-10 mx-auto shadow-bgColor shadow-lg space-y-2">
-            <h3 className="texy-3xl font-titleFont font-semibold">Comments</h3>
-            <hr />
-            {post.comments.map(comment => (
-              <div key={comment._id}>
-                <p>
-                  <span className="text-secondaryColor">{comment.name}</span>{" "}
-                  {comment.comment}
-                </p>
-              </div>
-            ))}
+            {userErr && (
+              <p className="text-sm font-titleFont text-center font-semibold text-red-500 underline underline-offset-2 my-1 px-4 animate-bounce">
+                {userErr}{" "}
+                <span className="text-base font-bold italic mr-2">!!!</span>
+              </p>
+            )}
+            <div className="w-full flex flex-col p-10 m-10 mx-auto shadow-bgColor shadow-lg space-y-2">
+              <h3 className="texy-3xl font-titleFont font-semibold">
+                Comments
+              </h3>
+              <hr />
+              {post.comments.map(comment => (
+                <div key={comment._id}>
+                  <p>
+                    <span className="text-secondaryColor">{comment.name}</span>{" "}
+                    {comment.comment}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-        <Footer />
+        )}
       </div>
+      <Footer />
     </div>
   );
 };
