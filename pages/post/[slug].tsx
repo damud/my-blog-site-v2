@@ -160,6 +160,13 @@ const Post = ({ post }: Props) => {
                   type="text"
                   placeholder="Enter your name"
                 />
+                {/* name input validation */}
+                {errors.name && (
+                  <p className="text-sm font-titleFont font-semibold text-red-500 my-1 px-4">
+                    Name is required
+                    <span className="text-base font-bold italic mr-2">!!!</span>
+                  </p>
+                )}
               </label>
               <label className="flex flex-col">
                 <span className="font-titleFont font-semibold text-base">
@@ -171,6 +178,13 @@ const Post = ({ post }: Props) => {
                   type="email"
                   placeholder="Enter your Email"
                 />
+                {/*  email input validation */}
+                {errors.email && (
+                  <p className="text-sm font-titleFont font-semibold text-red-500 my-1 px-4">
+                    Email is required
+                    <span className="text-base font-bold italic mr-2">!!!</span>
+                  </p>
+                )}
               </label>
               <label className="flex flex-col">
                 <span className="font-titleFont font-semibold text-base">
@@ -182,6 +196,13 @@ const Post = ({ post }: Props) => {
                   placeholder="Enter your Comments"
                   rows={6}
                 />
+                      {/*  comment input validation */}
+                      {errors.email && (
+                  <p className="text-sm font-titleFont font-semibold text-red-500 my-1 px-4">
+                    Comment is required
+                    <span className="text-base font-bold italic mr-2">!!!</span>
+                  </p>
+                )}
               </label>
               {session && (
                 <button
